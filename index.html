@@ -8,18 +8,24 @@
 </head>
 <body>
     <div class="game-container">
-        <h1>Бизнес-Империя</h1>
-        <div id="resources">
+        <div class="top-info">
             <p>Капитал: <span id="capital">100</span> $</p>
             <p>Работники: <span id="workers">1</span></p>
-            <p>Уровень компании: <span id="company-level">Стартап</span></p>
-            <p>Пассивный доход в час: <span id="passive-income">0</span> $</p>
+            <p>Уровень: <span id="company-level">Стартап</span></p>
         </div>
-        <button onclick="earnMoney()">Привлечь клиентов</button>
-        <button onclick="invest()">Инвестировать в бизнес</button>
-        <button onclick="hireManager()">Нанять менеджера</button>
+        <div class="center-info">
+            <p>Доход в час: <span id="passive-income">0</span> $</p>
+        </div>
         <div id="business-status"></div>
     </div>
+
+    <!-- Блок с кнопками внизу экрана -->
+    <div class="bottom-buttons">
+        <button onclick="earnMoney()">Заработать</button>
+        <button onclick="invest()">Нанять</button>
+        <button onclick="hireManager()">Менеджер</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
