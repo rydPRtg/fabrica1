@@ -4,9 +4,8 @@ let workers = parseInt(localStorage.getItem('workers')) || 1;
 let incomePerClick = 10;
 let managerHired = localStorage.getItem('managerHired') === 'true';
 let companyLevel = parseInt(localStorage.getItem('companyLevel')) || 1;
-let passiveIncomePerHour = workers * 5;  // Пассивный доход в час зависит от количества сотрудников
+let passiveIncomePerHour = workers * 5; // Пассивный доход в час зависит от количества сотрудников
 
-// Таблица уровней компании
 const companyLevels = [
     { level: 1, name: "Стартап", minWorkers: 1, maxWorkers: 10 },
     { level: 2, name: "Малый бизнес", minWorkers: 10, maxWorkers: 30 },
@@ -17,7 +16,6 @@ const companyLevels = [
     { level: 7, name: "Международная корпорация", minWorkers: 600, maxWorkers: 1200 }
 ];
 
-// Обновление интерфейса
 function updateDisplay() {
     document.getElementById("capital").innerText = capital.toFixed(2);
     document.getElementById("workers").innerText = workers;
@@ -25,20 +23,18 @@ function updateDisplay() {
     document.getElementById("passive-income").innerText = passiveIncomePerHour.toFixed(2);
 }
 
-// Заработок за клик
 function earnMoney() {
     capital += incomePerClick;
     updateLocalStorage();
     updateDisplay();
 }
 
-// Инвестировать в бизнес (нанимает сотрудника)
 function invest() {
     if (capital >= 50) {
         capital -= 50;
         workers += 1;
         incomePerClick += 5;
-        updatePassiveIncome();  // Обновляем пассивный доход при найме
+        updatePassiveIncome();
         checkCompanyLevel();
         updateLocalStorage();
         updateDisplay();
@@ -47,7 +43,6 @@ function invest() {
     }
 }
 
-// Нанять менеджера (автоматизация)
 function hireManager() {
     if (!managerHired && capital >= 100) {
         capital -= 100;
@@ -61,22 +56,19 @@ function hireManager() {
     }
 }
 
-// Расчет пассивного дохода на основе сотрудников
 function updatePassiveIncome() {
-    passiveIncomePerHour = workers * 5;  // Пассивный доход: каждый сотрудник приносит 5 $ в час
+    passiveIncomePerHour = workers * 5;
     updateLocalStorage();
 }
 
-// Пассивный доход от сотрудников (добавляет капитал каждую секунду)
 function autoIncome() {
     setInterval(() => {
-        capital += (passiveIncomePerHour / 3600);  // Пассивный доход каждую секунду
+        capital += (passiveIncomePerHour / 3600);
         updateLocalStorage();
         updateDisplay();
-    }, 1000);  // Запускаем каждую секунду
+    }, 1000);
 }
 
-// Проверка уровня компании
 function checkCompanyLevel() {
     for (let i = companyLevels.length - 1; i >= 0; i--) {
         if (workers >= companyLevels[i].minWorkers) {
@@ -89,14 +81,12 @@ function checkCompanyLevel() {
     }
 }
 
-// Сообщение пользователю
 function showMessage(message) {
     const status = document.getElementById("business-status");
     status.innerText = message;
     setTimeout(() => status.innerText = '', 3000);
 }
 
-// Сохранение данных в localStorage
 function updateLocalStorage() {
     localStorage.setItem('capital', capital);
     localStorage.setItem('workers', workers);
@@ -105,7 +95,11 @@ function updateLocalStorage() {
     localStorage.setItem('passiveIncomePerHour', passiveIncomePerHour);
 }
 
-// Инициализация
+// Блокировка скроллинга при быстром тапе
+document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
+
 updateDisplay();
 if (managerHired) autoIncome();
 checkCompanyLevel();
