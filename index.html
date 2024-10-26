@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бизнес-Империя</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Бизнес-Империя</h1>
+        <div id="resources">
+            <p>Капитал: <span id="capital">100</span> $</p>
+            <p>Работники: <span id="workers">1</span></p>
+            <p>Уровень компании: <span id="company-level">Стартап</span></p>
+            <p>Пассивный доход в час: <span id="passive-income">0</span> $</p>
+        </div>
+        <button onclick="earnMoney()">Привлечь клиентов</button>
+        <button onclick="invest()">Инвестировать в бизнес</button>
+        <button onclick="hireManager()">Нанять менеджера</button>
+        <div id="business-status"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
