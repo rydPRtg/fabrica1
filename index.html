@@ -22,11 +22,21 @@
         <div id="business-status"></div>
     </div>
 
-    <!-- Кнопки внизу экрана -->
     <div class="bottom-buttons">
         <button onclick="earnMoney()">Заработать</button>
-        <button onclick="invest()">Нанять</button>
+        <button id="hire-button" onclick="invest()">Нанять (50 $)</button>
         <button onclick="hireManager()">Менеджер</button>
+        <button onclick="openShop()">Магазин</button>
+    </div>
+
+    <!-- Модальное окно для магазина -->
+    <div id="shop-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeShop()">&times;</span>
+            <h2>Магазин</h2>
+            <p>Купить 1000 монет за 1 Telegram Stars</p>
+            <button onclick="buyCoins()">Купить</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
