@@ -5,7 +5,7 @@ let incomePerClick = 10;
 let managerHired = localStorage.getItem('managerHired') === 'true';
 let companyLevel = parseInt(localStorage.getItem('companyLevel')) || 1;
 let passiveIncomePerHour = workers * 5;
-let hireCost = parseFloat(localStorage.getItem('hireCost')) || 50;  // Начальная стоимость найма
+let hireCost = parseFloat(localStorage.getItem('hireCost')) || 50;
 
 // Таблица уровней компании
 const companyLevels = [
@@ -18,7 +18,7 @@ const companyLevels = [
     { level: 7, name: "Международная корпорация", minWorkers: 600, maxWorkers: 1200 }
 ];
 
-// Обновление интерфейса
+// Функция для обновления отображения данных
 function updateDisplay() {
     document.getElementById("capital").innerText = capital.toFixed(2);
     document.getElementById("workers").innerText = workers;
@@ -27,14 +27,14 @@ function updateDisplay() {
     document.getElementById("hire-button").innerText = `Нанять (${hireCost.toFixed(2)} $)`;
 }
 
-// Заработок за клик
+// Функция заработка за клик
 function earnMoney() {
     capital += incomePerClick;
     updateLocalStorage();
     updateDisplay();
 }
 
-// Инвестировать в бизнес (нанимает сотрудника)
+// Функция для найма сотрудника
 function invest() {
     if (capital >= hireCost) {
         capital -= hireCost;
@@ -50,13 +50,14 @@ function invest() {
     }
 }
 
-// Нанять менеджера (автоматизация)
+// Функция для найма менеджера
 function hireManager() {
     if (!managerHired && capital >= 100) {
         capital -= 100;
         managerHired = true;
         showMessage("Менеджер нанят! Доход увеличен.");
         autoIncome();
+        updateLocalStorage();
     } else if (managerHired) {
         showMessage("Менеджер уже нанят.");
     } else {
@@ -64,22 +65,57 @@ function hireManager() {
     }
 }
 
-// Расчет пассивного дохода на основе сотрудников
+// Функция для открытия магазина и создания инвойса через Telegram Bot API
+function openShop() {
+    const apiUrl = `https://api.telegram.org/bot<7471596204:AAHajSvhuxZBKwOZhu1BLDOL-6WpJsL8J6c>/sendInvoice`;
+    const chatId = '<YOUR_CHAT_ID>';
+    const payload = {
+        chat_id: chatId,
+        title: "Покупка капитала",
+        description: "Пожертвование для компании",
+        payload: "donate",
+        provider_token: "<YOUR_PROVIDER_TOKEN>",
+        currency: "XTR",
+        prices: JSON.stringify([{ label: "Поддержка компании", amount: 50000 }])  // 500 р.
+    };
+
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            showMessage("Инвойс создан! Проверьте Telegram для оплаты.");
+        } else {
+            showMessage("Ошибка при создании инвойса.");
+        }
+    })
+    .catch(error => {
+        console.error("Ошибка:", error);
+        showMessage("Ошибка сети. Повторите попытку позже.");
+    });
+}
+
+// Функция для расчета пассивного дохода
 function updatePassiveIncome() {
     passiveIncomePerHour = workers * 5;
     updateLocalStorage();
 }
 
-// Пассивный доход от сотрудников (добавляет капитал каждую секунду)
+// Функция для начисления пассивного дохода
 function autoIncome() {
     setInterval(() => {
-        capital += (passiveIncomePerHour / 3600);
+        capital += (passiveIncomePerHour / 3600);  // Пассивный доход начисляется каждую секунду
         updateLocalStorage();
         updateDisplay();
     }, 1000);
 }
 
-// Проверка уровня компании
+// Функция проверки и обновления уровня компании
 function checkCompanyLevel() {
     for (let i = companyLevels.length - 1; i >= 0; i--) {
         if (workers >= companyLevels[i].minWorkers) {
@@ -92,14 +128,14 @@ function checkCompanyLevel() {
     }
 }
 
-// Сообщение пользователю
+// Функция для отображения сообщений
 function showMessage(message) {
     const status = document.getElementById("business-status");
     status.innerText = message;
     setTimeout(() => status.innerText = '', 3000);
 }
 
-// Сохранение данных в localStorage
+// Функция для сохранения данных в localStorage
 function updateLocalStorage() {
     localStorage.setItem('capital', capital);
     localStorage.setItem('workers', workers);
@@ -109,16 +145,8 @@ function updateLocalStorage() {
     localStorage.setItem('hireCost', hireCost);
 }
 
-// Инициализация
+// Инициализация и запуск начальных функций
 updateDisplay();
 if (managerHired) autoIncome();
 checkCompanyLevel();
 updatePassiveIncome();
-
-// Открытие магазина
-function openShop() {
-    showMessage("Открываем магазин...");
-    // Здесь можно добавить логику для открытия магазина
-    // Например, отправить запрос на сервер для создания счета
-    Telegram.WebApp.sendData('buy_coins');
-}
