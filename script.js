@@ -6,7 +6,6 @@ let companyLevel = parseInt(localStorage.getItem('companyLevel')) || 1;
 let passiveIncomePerHour = workers * 5;
 let hireCost = parseFloat(localStorage.getItem('hireCost')) || 50;
 
-// Обновление интерфейса
 function updateDisplay() {
     document.getElementById("capital").innerText = capital.toFixed(2);
     document.getElementById("workers").innerText = workers;
@@ -15,7 +14,6 @@ function updateDisplay() {
     document.getElementById("hire-button").innerText = `Нанять (${hireCost.toFixed(2)} $)`;
 }
 
-// Открытие и закрытие магазина
 function openShop() {
     document.getElementById("shop-modal").style.display = "block";
 }
@@ -24,19 +22,10 @@ function closeShop() {
     document.getElementById("shop-modal").style.display = "none";
 }
 
-// Отправка запроса на покупку монет боту
+// Покупка монет через Telegram Stars
 function buyCoins() {
-    const data = { action: 'buy', amount: 1000 };
-    window.Telegram.WebApp.sendData(JSON.stringify(data)); // Отправляем данные в бот
-}
-
-// Успешная покупка
-function onSuccessfulPayment() {
-    capital += 1000;
-    updateLocalStorage();
-    updateDisplay();
-    closeShop();
-    alert("Покупка успешна! Вы получили 1000 монет.");
+    const data = { action: 'buy_1000_coins' };
+    window.Telegram.WebApp.sendData(JSON.stringify(data)); // Отправка данных в бот
 }
 
 function updateLocalStorage() {
