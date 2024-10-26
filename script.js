@@ -6,6 +6,7 @@ let companyLevel = parseInt(localStorage.getItem('companyLevel')) || 1;
 let passiveIncomePerHour = workers * 5;
 let hireCost = parseFloat(localStorage.getItem('hireCost')) || 50;
 
+// Обновление интерфейса
 function updateDisplay() {
     document.getElementById("capital").innerText = capital.toFixed(2);
     document.getElementById("workers").innerText = workers;
@@ -23,16 +24,10 @@ function closeShop() {
     document.getElementById("shop-modal").style.display = "none";
 }
 
-// Покупка монет
+// Отправка запроса на покупку монет боту
 function buyCoins() {
-    bot.sendInvoice({
-        chat_id: message.chat.id,
-        title: '1000 монет',
-        description: 'Покупка 1000 монет за 1 Telegram Stars',
-        payload: 'buy_1000_coins',
-        currency: 'XTR',
-        prices: [{ label: '1000 монет', amount: 1 }]
-    });
+    const data = { action: 'buy', amount: 1000 };
+    window.Telegram.WebApp.sendData(JSON.stringify(data)); // Отправляем данные в бот
 }
 
 // Успешная покупка
