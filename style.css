@@ -19,32 +19,49 @@ body {
     background-size: cover;
 }
 
-.game-container {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    margin-top: 20px;
-    text-align: center;
-}
-
+/* Контейнер информации о капитале, работниках и уровне компании */
 .top-info {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    text-align: left;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    font-size: 0.9em;
+    width: auto;
+    color: #ffffff;
 }
 
 .top-info p {
     margin: 5px 0;
 }
 
+/* Централизованный блок дохода в час */
 .center-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 100px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    text-align: center;
+    width: auto;
+    font-size: 0.9em;
 }
 
+/* Основной контейнер */
+.game-container {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Кнопки внизу */
 .bottom-buttons {
     position: absolute;
     bottom: 20px;
@@ -55,14 +72,15 @@ body {
 }
 
 button {
-    padding: 10px 20px;
+    padding: 10px 5%;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100px;
+    width: 28%;
+    font-size: 1em;
 }
 
 button:hover {
@@ -71,6 +89,18 @@ button:hover {
 
 #business-status {
     margin-top: 20px;
-    font-size: 18px;
+    font-size: 1em;
     color: lightgreen;
+}
+
+/* Медиа-запрос для маленьких экранов */
+@media (max-width: 480px) {
+    .top-info, .center-info {
+        font-size: 0.8em;
+    }
+
+    button {
+        padding: 10px 4%;
+        font-size: 0.9em;
+    }
 }

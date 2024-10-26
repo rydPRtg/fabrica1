@@ -2,24 +2,27 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Бизнес-Империя</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="top-info">
+        <p>Капитал: <span id="capital">100</span> $</p>
+        <p>Работники: <span id="workers">1</span></p>
+        <p>Уровень: <span id="company-level">Стартап</span></p>
+    </div>
+
+    <div class="center-info">
+        <p>Доход в час</p>
+        <p><span id="passive-income">0</span> $</p>
+    </div>
+
     <div class="game-container">
-        <div class="top-info">
-            <p>Капитал: <span id="capital">100</span> $</p>
-            <p>Работники: <span id="workers">1</span></p>
-            <p>Уровень: <span id="company-level">Стартап</span></p>
-        </div>
-        <div class="center-info">
-            <p>Доход в час: <span id="passive-income">0</span> $</p>
-        </div>
         <div id="business-status"></div>
     </div>
 
-    <!-- Блок с кнопками внизу экрана -->
+    <!-- Кнопки внизу экрана -->
     <div class="bottom-buttons">
         <button onclick="earnMoney()">Заработать</button>
         <button onclick="invest()">Нанять</button>
